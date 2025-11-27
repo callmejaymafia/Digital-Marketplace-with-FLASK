@@ -11,3 +11,4 @@ migrations/
 .vscode/
 *.db
 .idea
+.venv
