@@ -10,3 +10,4 @@ migrations/
 .pyre/
 .vscode/
 *.db
+.idea

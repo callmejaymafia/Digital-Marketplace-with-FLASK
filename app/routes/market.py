@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint
 
-routes = Blueprint("routes", __name__)
+market = Blueprint("market", __name__)
 
 
-@routes.route("/")
-def home():
-    return "Welcome to the Home Page"
+@market.route("/")
+@market.route("/market")
+def market_home():
+    return "<h1>Welcome to the market</h1>"
