@@ -15,5 +15,37 @@
       rel="stylesheet"
     />
   </head>
-  <body></body>
+  <body class="">
+    <header class="bg-green-500 text-white p-4 flex items-center justify-between">
+      <nav class="flex items-center justify-between w-full">
+
+        <a href="#">
+          <img src="your-logo.png" alt="site-logo" class="h-10" />
+        </a>
+
+        <ul class="flex space-x-6 font-semibold items-center">
+          <li class="hover:text-amber-300"><a href="#">Home</a></li>
+          <li class="hover:text-amber-300"><a href="#">Market</a></li>
+          <li class="hover:text-amber-300"><a href="#">Dashboard</a></li>
+          <li class="hover:text-amber-300"><a href="#">Product</a></li>
+
+          <li class="relative group">
+            <button class="hover:text-amber-100">
+              Account
+            </button>
+
+            <div class="absolute top-full mt-2 hidden group-hover:block bg-white text-black rounded shadow-lg py-2 w-32">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sign Up</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sign In</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+              <a href="#" class="block px-4 py-2 text-red-400 hover:text-red-600 hover:bg-gray-100">Sign Out</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+
+    {% block content %}{% endblock %}
+  </body>
 </html>
