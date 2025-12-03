@@ -7,9 +7,9 @@
       type="image/png"
       sizes="96x96"
       rel="icon"
-      href="{{ url_for('static', filename='../static/images/favicon.png') }}"
+      href="{{ url_for('static', filename='../static/resources/icons/icon.png') }}"
     />
-    <title>{{ title }} - Digital</title>
+    <title>{{ title }} - Digital Max</title>
     <link
       href="{{ url_for('static', filename='src/output.css') }}"
       rel="stylesheet"
@@ -19,13 +19,13 @@
     <header class="bg-green-500 text-white p-4 flex items-center justify-between">
       <nav class="flex items-center justify-between w-full">
 
-        <a href="#">
-          <img src="your-logo.png" alt="site-logo" class="h-10" />
+        <a href="{{ url_for("marketplace.market_home") }}">
+          <img src="{{ url_for('static', filename='../static/resources/icons/logo.png') }}" alt="site-logo" class="h-10" />
         </a>
 
         <ul class="flex space-x-6 font-semibold items-center">
           <li class="hover:text-amber-300"><a href="#">Home</a></li>
-          <li class="hover:text-amber-300"><a href="#">Market</a></li>
+          <li class="hover:text-amber-300"><a href="{{ url_for("marketplace.market_home") }}">Marketplace</a></li>
           <li class="hover:text-amber-300"><a href="#">Dashboard</a></li>
           <li class="hover:text-amber-300"><a href="#">Product</a></li>
 
@@ -34,17 +34,27 @@
               Account
             </button>
 
-            <div class="absolute top-full mt-2 hidden group-hover:block bg-white text-black rounded shadow-lg py-2 w-32">
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sign Up</a>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sign In</a>
+            <div class="absolute top-full hidden group-hover:block bg-white text-black rounded shadow-lg py-2 w-32">
+              <a href="{{ url_for("auth.signup") }}" class="block px-4 py-2 hover:bg-gray-100">Sign Up</a>
+              <a href="{{ url_for("auth.signin") }}" class="block px-4 py-2 hover:bg-gray-100">Sign In</a>
               <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
-              <a href="#" class="block px-4 py-2 text-red-400 hover:text-red-600 hover:bg-gray-100">Sign Out</a>
+              <a href="{{ url_for("auth.signout") }}" class="block px-4 py-2 text-red-400 hover:text-red-600 hover:bg-gray-100">Sign Out</a>
             </div>
           </li>
         </ul>
       </nav>
     </header>
 
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+      <div>
+        {% for message in messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
 
     {% block content %}{% endblock %}
   </body>
