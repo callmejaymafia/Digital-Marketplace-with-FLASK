@@ -11,6 +11,8 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 @auth.route("/sign-up", methods=["POST", "GET"])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for("vendor.dashboard"))
     form = Signup()
     if form.validate_on_submit():
         fullName = form.fullName.data
@@ -44,12 +46,33 @@ def signup():
 
 @auth.route("/sign-in", methods=["POST", "GET"])
 def signin():
+    if current_user.is_authenticated:
+        return redirect(url_for("vendor.dashboard"))
+
     form = Signin()
+
     if form.validate_on_submit():
-        flash(
-            f"Login requested {form.identifier.data}, Remember me {form.rememberMe.data}"
-        )
-        return redirect("/dashboard")
+        identifier = form.identifier.data
+        password = form.password.data
+        rememberMe = form.rememberMe.data
+
+        vendor = Vendor.query.filter(
+            (Vendor.userName == identifier) | (Vendor.email == identifier)
+        ).first()
+
+        if vendor:
+            if check_password_hash(vendor.password, password):
+
+                login_user(vendor, remember=rememberMe)
+                flash("Logged in successfully!", "success")
+                return redirect(url_for("vendor.dashboard"))
+            else:
+                flash("Incorrect password, try again.", "error")
+        else:
+            flash("User not found.", "error")
+
+        return redirect(url_for("auth.signin"))
+
     return render_template("sign_in.html", title="Sign In", form=form)
 
 
@@ -59,5 +82,7 @@ def load_user(user_id):
 
 
 @auth.route("/sign-out")
+@login_required
 def signout():
-    pass
+    logout_user()
+    return redirect(url_for("auth.signin"))
